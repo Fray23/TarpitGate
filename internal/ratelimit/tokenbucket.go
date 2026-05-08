@@ -41,22 +41,22 @@ func (b *TokenBucket) Allow() bool {
 	return false
 }
 
-type Limiter struct {
+type TokenBucketLimiter struct {
 	mu         sync.Mutex
 	buckets    map[string]*TokenBucket
 	capacity   float64
 	refillRate float64
 }
 
-func NewLimiter(capacity, refillRate float64) *Limiter {
-	return &Limiter{
+func NewLimiter(capacity, refillRate float64) *TokenBucketLimiter {
+	return &TokenBucketLimiter{
 		buckets:    make(map[string]*TokenBucket),
 		capacity:   capacity,
 		refillRate: refillRate,
 	}
 }
 
-func (l *Limiter) AllowIP(ip string) bool {
+func (l *TokenBucketLimiter) AllowIP(ip string) bool {
 	l.mu.Lock()
 	b, ok := l.buckets[ip]
 	if !ok {

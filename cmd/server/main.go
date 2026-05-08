@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 	"net/http/httputil"
-	"tarpit/internal/rate_limit"
+	"tarpit/internal/ratelimit"
 	"tarpit/internal/tarpit"
 )
 
@@ -18,9 +18,8 @@ func main() {
 		},
 	}
 
-	limiter := ratelimit.NewLimiter(10, 10)
-	rate_limit := tarpit.RateLimit{Limiter: limiter}
-	handler := rate_limit.Middleware(tarpit.TarpitMiddleware(proxy))
+	limiter := ratelimit.NewRateLimit(10, 10)
+	handler := limiter.Middleware(tarpit.TarpitMiddleware(proxy))
 	if err := http.ListenAndServe(":8080", handler); err != nil {
 		log.Fatal(err)
 	}
