@@ -7,6 +7,13 @@ import (
 // TODO replace to redis
 var noBrowserUASubstrings = []string{
 	"curl/", "wget/", "python-requests", "python-urllib",
+	"crawler", "spider", "scraper",
+	"curl/", "wget/", "libwww-perl/",
+	"python-requests/", "python-urllib/", "aiohttp/", "httpx/",
+	"Go-http-client/", "okhttp/", "Java/", "Apache-HttpClient/",
+	"node-fetch/", "axios/", "got/",
+	"PostmanRuntime/", "insomnia/",
+	"headless", "HeadlessChrome", "PhantomJS", "Selenium",
 }
 
 var botKeywords = []string{
