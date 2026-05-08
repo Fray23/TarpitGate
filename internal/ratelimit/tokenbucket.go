@@ -58,12 +58,13 @@ func NewLimiter(capacity, refillRate float64) *TokenBucketLimiter {
 
 func (l *TokenBucketLimiter) AllowIP(ip string) bool {
 	l.mu.Lock()
+	defer l.mu.Unlock()
+
 	b, ok := l.buckets[ip]
 	if !ok {
 		b = NewTokenBucket(l.capacity, l.refillRate)
 		l.buckets[ip] = b
 	}
-	l.mu.Unlock()
 
 	return b.Allow()
 }
